@@ -11,6 +11,16 @@ availabilityRouter.get('/', async (req, res, next) => {
       res.status(400).json({ error: 'date and serviceId query params are required' });
       return;
     }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      res.status(400).json({ error: 'date must be in YYYY-MM-DD format' });
+      return;
+    }
+
+    const service = await prisma.service.findUnique({ where: { id: serviceId } });
+    if (!service) {
+      res.status(404).json({ error: 'Service not found' });
+      return;
+    }
 
     const bookings = await prisma.booking.findMany({
       where: { date, serviceId },
