@@ -37,4 +37,21 @@ describe('GET /availability', () => {
     const res = await request(createApp()).get('/availability').query({ date: '2026-10-01' });
     expect(res.status).toBe(400);
   });
+
+  it('returns 400 when date is not in YYYY-MM-DD format', async () => {
+    const service = await prisma.service.create({
+      data: { name: 'Vinyasa Flow', durationMinutes: 60, priceCents: 2500 },
+    });
+    const res = await request(createApp())
+      .get('/availability')
+      .query({ date: 'not-a-date', serviceId: service.id });
+    expect(res.status).toBe(400);
+  });
+
+  it('returns 404 when serviceId does not exist', async () => {
+    const res = await request(createApp())
+      .get('/availability')
+      .query({ date: '2026-10-01', serviceId: 'does-not-exist' });
+    expect(res.status).toBe(404);
+  });
 });

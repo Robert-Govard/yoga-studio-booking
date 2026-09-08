@@ -54,9 +54,12 @@ cd client && npm test
    - Build command: `npm install && npx prisma generate && npm run build`
    - Start command: `npm start`
    - Env vars: `DATABASE_URL` (from step 1), `ADMIN_TOKEN` (a strong secret)
-   - Run `npx prisma migrate deploy` once against the production database
-     (via Render's shell or a one-off job) before first use, then `npm run seed`
-     with `DATABASE_URL` set to production to seed services.
+   - Run `npx prisma db push` once against the production database (via
+     Render's shell or a one-off job) before first use — this project uses
+     `db push`, not migration files, so there is no `prisma/migrations`
+     directory to run `migrate deploy` against. Then run `npm run seed` with
+     `DATABASE_URL` set to production to seed services (the seed script is
+     idempotent — safe to re-run, it skips seeding if services already exist).
 3. **Client (Vercel/Netlify):**
    - Root directory: `client/`
    - Build command: `npm run build`, output directory: `dist`
@@ -66,3 +69,10 @@ cd client && npm test
 
 Visit `/admin` and enter the `ADMIN_TOKEN` value to view all bookings.
 There is no user management system — this is a single shared token by design.
+
+## Notes on scope
+
+This is a portfolio piece, not a production booking system. Deliberately
+out of scope: CORS is fully open (no cookies/credentials are used, so this
+is not a CSRF risk, but a real deployment would restrict `Access-Control-Allow-Origin`
+to the client's domain), and there is no rate limiting on `POST /bookings`.

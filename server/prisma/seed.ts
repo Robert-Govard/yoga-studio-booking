@@ -3,6 +3,12 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  const existing = await prisma.service.count();
+  if (existing > 0) {
+    console.log(`Skipping seed: ${existing} service(s) already exist.`);
+    return;
+  }
+
   await prisma.service.createMany({
     data: [
       { name: 'Vinyasa Flow (60 min)', durationMinutes: 60, priceCents: 2500 },
