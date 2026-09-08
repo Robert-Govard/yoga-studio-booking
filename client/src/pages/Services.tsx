@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import type { Service } from '../types';
 
 export function Services() {
-  const { t } = useLanguage();
+  const { t, tService } = useLanguage();
   const [services, setServices] = useState<Service[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +23,7 @@ export function Services() {
       <ul className="mt-8 grid gap-6 sm:grid-cols-2">
         {services.map((service) => (
           <li key={service.id} className="rounded-lg border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold">{service.name}</h2>
+            <h2 className="text-xl font-semibold">{tService(service.name)}</h2>
             <p className="mt-1 text-gray-600">
               {service.durationMinutes} {t('services.minutes')}
             </p>
