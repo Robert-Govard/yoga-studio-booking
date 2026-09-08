@@ -5,14 +5,19 @@ export interface Service {
   priceCents: number;
 }
 
-export interface Booking {
+// What POST /bookings actually returns: scalar fields only, no relation.
+export interface BookingCreated {
   id: string;
   serviceId: string;
-  service: Service;
   date: string;
   timeSlot: string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
   createdAt: string;
+}
+
+// What GET /admin/bookings returns: the same fields plus the included Service relation.
+export interface Booking extends BookingCreated {
+  service: Service;
 }

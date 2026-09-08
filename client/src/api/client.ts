@@ -1,4 +1,4 @@
-import type { Service, Booking } from '../types';
+import type { Service, Booking, BookingCreated } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
@@ -28,7 +28,7 @@ export interface CreateBookingInput {
   customerPhone: string;
 }
 
-export async function createBooking(input: CreateBookingInput): Promise<Booking> {
+export async function createBooking(input: CreateBookingInput): Promise<BookingCreated> {
   const res = await fetch(`${API_URL}/bookings`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
