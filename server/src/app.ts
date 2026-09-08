@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { servicesRouter } from './routes/services';
+import { availabilityRouter } from './routes/availability';
 
 export function createApp() {
   const app = express();
@@ -12,6 +13,7 @@ export function createApp() {
   });
 
   app.use('/services', servicesRouter);
+  app.use('/availability', availabilityRouter);
 
   return app;
 }
