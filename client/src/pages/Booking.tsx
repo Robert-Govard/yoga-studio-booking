@@ -6,7 +6,7 @@ import type { Service } from '../types';
 const today = new Date().toISOString().slice(0, 10);
 
 export function Booking() {
-  const { t } = useLanguage();
+  const { t, tService } = useLanguage();
   const [services, setServices] = useState<Service[]>([]);
   const [servicesError, setServicesError] = useState<string | null>(null);
   const [serviceId, setServiceId] = useState('');
@@ -139,7 +139,7 @@ export function Booking() {
           >
             {services.map((s) => (
               <option key={s.id} value={s.id}>
-                {s.name}
+                {tService(s.name)}
               </option>
             ))}
           </select>

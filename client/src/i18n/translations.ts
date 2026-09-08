@@ -1,5 +1,16 @@
 export type Language = 'en' | 'ru';
 
+// Service names come from the database (real seeded data, not static UI
+// copy), so they can't live in the `translations` tree below. This maps
+// the exact English names the server seeds to their Russian equivalent;
+// an unknown name (e.g. a service added later without updating this map)
+// falls back to showing the original name untranslated.
+export const serviceNameTranslations: Record<string, string> = {
+  'Vinyasa Flow (60 min)': 'Виньяса-флоу (60 мин)',
+  'Restorative Yoga (75 min)': 'Восстанавливающая йога (75 мин)',
+  'Private 1:1 Session (60 min)': 'Персональное занятие (60 мин)',
+};
+
 export const translations = {
   en: {
     nav: {

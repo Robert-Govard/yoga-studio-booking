@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
-import { translations, type Language } from './translations';
+import { translations, serviceNameTranslations, type Language } from './translations';
 
 interface LanguageContextValue {
   language: Language;
   setLanguage: (language: Language) => void;
   t: (key: string, vars?: Record<string, string>) => string;
+  /** Translates a service name that came from the API (real data, not static UI copy). */
+  tService: (name: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
@@ -46,7 +48,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return text;
   }
 
-  return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>;
+  function tService(name: string) {
+    return language === 'ru' ? (serviceNameTranslations[name] ?? name) : name;
+  }
+
+  return <LanguageContext.Provider value={{ language, setLanguage, t, tService }}>{children}</LanguageContext.Provider>;
 }
 
 export function useLanguage() {
