@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { servicesRouter } from './routes/services';
 import { availabilityRouter } from './routes/availability';
+import { bookingsRouter } from './routes/bookings';
+import { errorHandler } from './middleware/errorHandler';
 
 export function createApp() {
   const app = express();
@@ -14,6 +16,9 @@ export function createApp() {
 
   app.use('/services', servicesRouter);
   app.use('/availability', availabilityRouter);
+  app.use('/bookings', bookingsRouter);
+
+  app.use(errorHandler);
 
   return app;
 }
