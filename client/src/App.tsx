@@ -5,6 +5,7 @@ import { Home } from './pages/Home';
 import { Services } from './pages/Services';
 import { About } from './pages/About';
 import { Booking } from './pages/Booking';
+import { Admin } from './pages/Admin';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/booking" element={<Booking />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </div>
         <Footer />
